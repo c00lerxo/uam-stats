@@ -167,7 +167,7 @@ replace(x, indices, 11)
 # the last element of the list will be a vector consisting of numbers 0.1,0.2,…,1. Then remove the first 
 # element and the third element from this list. Finally, create a list containing values of the gamma() 
 # function for the elements of the my_list object.
-name = c('Weronika', 'Olejniczak')
+name = c('Jan', 'Kowalski')
 x = seq(0.1, 1, by = 0.1)
 func <- list(unique)
 my_list <- list(name, pi, func, x)
