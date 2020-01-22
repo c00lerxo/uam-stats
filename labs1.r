@@ -121,3 +121,55 @@ count <- length(primlist[primlist > 100 & primlist < 500])
 
 combinations <- paste(rep(v1, each = 3), v2, sep = "")
 
+### TASK 12 ###
+# Create a vector of 30 strings of the form number.letter, where the number is consecutive natural numbers
+# from 1 to 30, and the letter is three capital letters X, Y, Z occuring cyclically.
+number <- c(1:30)
+letter <- c('X', 'Y', 'Z')
+paste(number, letter, sep=".")
+
+
+### TASK 13 ###
+# In some situations, it may be useful to categorize variable, i.e., a different division into categories 
+# than would result from the data.
+#   Generate 100 observations that are the answers to the survey questions, each answer can take one of 
+#   the values: 'a', 'b', 'c', 'd', 'e'.
+#   Categorize the obtained observations so that category 1 includes 'a' and 'b' responses, category 2 
+#   'c' and 'd' responses, and category 3 'e' response.
+# Hint: Use the sample() function and the recode() function from the car package.
+install.packages("car", dependencies = TRUE)
+require(car) # or library(car)
+library(help = "car")
+# help('sample')
+obv <- rep(sample(c('a', 'b', 'c', 'd', 'e')), length.out = 100)
+# help('recode')
+encode <- recode(obv, "c('a','b')=1;c('c','d')=2;'e'=3")
+
+
+### TASK 14 ###
+# Create the vector x of elements NA, 3, 14, NA, 33, 17, NA, 41.
+#   Count the number of missing values.
+#   Calculate the arithmetic mean without taking into account the missing values.
+#   Remove missing data.
+#   Replace the missing values with 11.
+x <- c(NA, 3, 14, NA, 33, 17, NA, 41)
+sum(as.numeric(is.na(x)))
+mean(x, na.rm=TRUE)
+# na.omit(x) or:
+indices <- which(is.na(x))
+x[-indices]
+replace(x, indices, 11)
+
+
+### TASK 15 ###
+# Create a list called my_list, whose first element will be a two-element character vector containing your 
+# first name and surname, the second element will be the number π, the third the unique() function, and 
+# the last element of the list will be a vector consisting of numbers 0.1,0.2,…,1. Then remove the first 
+# element and the third element from this list. Finally, create a list containing values of the gamma() 
+# function for the elements of the my_list object.
+name = c('Weronika', 'Olejniczak')
+x = seq(0.1, 1, by = 0.1)
+func <- list(unique)
+my_list <- list(name, pi, func, x)
+my_list[c(1, 3)] <- NULL
+my_list_gamma <- list(gamma(my_list[[1]]), gamma(my_list[[2]]))
