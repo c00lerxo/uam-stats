@@ -4,7 +4,6 @@ install.packages("moments")
 library(magrittr)
 library(moments)
 
-
 # Task 2.1
 ###
 # The variable result in the file survey.txt describes the results of
@@ -226,5 +225,164 @@ cv(sd, mean) %>%
 # It suggests that our data is dispersed.
 # Also, the coefficient of variation (73%) has a big value, which also gives us
 # a hint about data being widely spread-out.
+
+
+# Task 2.3
+###
+# The variable in the file failures.txt describes
+# the results of 50 measurements of failure-free operation time of a given device (in hours).
+# Which type is this variable? What are its possible values?
+
+# It is a quantitative, continuous random variable. There are infinitely many
+# possible values of the variable.
+
+# Import the data from the file failures.txt.
+failures <- read.table('~/uam/stats/failures.txt')
+
+# Present the empirical distribution of the failure-free operation time in the form of a table.
+
+FailureFreeOperationTimeEmpiricalDistribution <- function(failures) {
+  breaks_hist <- (hist(failures$V1, plot = FALSE)$breaks)
+  
+  data.frame(cbind(frequency = table(cut(failures$V1, breaks = breaks_hist)),
+                   percent = prop.table(table(cut(failures$V1, breaks = breaks_hist)))))
+}
+
+failures %>%
+  FailureFreeOperationTimeEmpiricalDistribution() %>%
+  print()
+
+# Illustrate the empirical distribution of the failure-free operation time using a histogram,
+# boxplot and stemplot. What are advantages and disadvantages of these charts?
+
+FailureFreeOperationTimeHistogram <- function(failures, probability = FALSE) {
+  breaks_hist <- (hist(failures$V1, plot = FALSE)$breaks)
+  
+  hist(failures$V1, 
+       xlab = "Failure free operation time", 
+       probability = probability,
+       main = "Empirical distribution of failure free operation time",
+       col = GetRandomColorsVector(length(breaks_hist)))
+  
+  if (probability == FALSE) {
+    rug(jitter(failures$V1))
+  }
+  else {
+    lines(density(failures$V1, cut = 0.8), col = "red", lwd = 2)
+  }
+}
+
+FailureFreeOperationTimeBoxplot <- function(failures) {
+  boxplot(failures$V1,
+          ylab = "Failure free operation time",
+          main = "Empirical distribution of failure free operation time",
+          ylim = c(0, 3500))
+}
+
+
+failures %>%
+  FailureFreeOperationTimeHistogram(probability = FALSE)
+
+failures %>%
+  FailureFreeOperationTimeHistogram(probability = TRUE)
+
+# Histogram advantages:
+# Distribution of the data among intervals is easily seen
+# We can plot density
+
+# Histogram disadvantages:
+# Data dispersion is hard to assess
+
+
+failures %>%
+  FailureFreeOperationTimeBoxplot()
+
+# Boxplot advantages:
+# Data dispersion is easily seen
+# We can read a lot of features of data from it, for example median, quartilles, skewness
+
+# Boxplot disadvantages:
+# You cannot deduce data distribution by using it
+
+stem(failures$V1)
+
+# No idea :)
+# You can analyse the data more precisely?
+
+
+# Calculate the mean, median, standard deviation, coefficient of variation,
+# skewness and kurtosis of the failure-free operation time.
+
+# Mean
+mean <- mean(failures$V1) %>%
+  print()
+
+# Standard deviation
+sd <- sd(failures$V1) %>%
+  print()
+
+# Median
+median <- median(failures$V1) %>%
+  print()
+
+# Coefficient of variation
+cv <- cv(sd, mean) %>%
+  print()
+
+# Skewness
+skewness <- skewness(failures$V1) %>%
+  print()
+
+# Kurtosis
+kurtosis <- kurtosis(failures$V1) %>%
+  print()
+
+# Interpret the above tabular, graphical and numerical results.
+
+# 1. The most of the data sample lies in the interval (0, 1000] (58%)
+# 2. Data is not normally distributed (kurtosis < 3)
+# 3. Data is right-skewed
+# 4. Data is highly dispersed (high standard deviation and coefficient of variation), especially
+#    the 3q - 4q (much higher dispersion than 1q - 2q)
+
+#Write the function coefficient_of_variation(), which calculates the value of the coefficient
+# of variation for the given vector of observations. The function should have two arguments:
+  
+# x - a vector containing data,
+# na.rm - a logical value (the default is FALSE), which indicates whether missing values (objects NA) 
+# are ignored.
+# The function returns the value of the coefficient of variation expressed as percentage.
+# In addition, the function checks whether the vector x is a numeric vector.
+# Otherwise, an error will be returned with the following message: “argument is not numeric”.
+
+coefficient_of_variation <- function(x, na.rm = FALSE) {
+  if (is.numeric(x)) {
+    if (anyNA(x) & na.rm == TRUE) {
+      x <- x[!is.na(x)]
+    }
+    sd <- sd(x)
+    mean <- mean(x)
+  
+    
+    (sd / mean) * 100
+  }
+  else {
+    stop("x is not numeric vector")
+  }
+}
+
+x <- c(1, NA, 3)
+
+x %>%
+  coefficient_of_variation() %>%
+  print()
+
+x %>%
+  coefficient_of_variation(na.rm = TRUE) %>%
+  print()
+
+coefficient_of_variation()
+
+coefficient_of_variation(c("x", "y"))
 
 
