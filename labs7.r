@@ -77,7 +77,7 @@ abline(model, col = "red", lwd = 2)
 # Using a linear regression model, describe the relationship between braking distance and speed using 
 # full data and data without outlier. What are the results for both models? Which model is better? 
 # More precisely, follow the same points 2-7 as in Task 1 for each model separately. In point 6, 
-# predict braking distance for speed 30, 31, …, 50.
+# predict braking distance for speed 30, 31, â€¦, 50.
 getwd() # check current directory
 setwd("C:\\Users\\Weronika\\Desktop\\studia\\III year, I semester\\Elements of Statistics")
 load("braking.RData")
@@ -89,7 +89,7 @@ plot(braking,
       las = 1
     )
 # identify outlier
-# outlier - any point that doesn’t appear to belong with the vast majority of the other points.
+# outlier - any point that doesnâ€™t appear to belong with the vast majority of the other points.
 outlier <- boxplot(braking)$out
 outlier_indices <- which(braking$distance %in% outlier)
 
@@ -124,7 +124,7 @@ lines(speed, pred.int[, 2], lty = 2, col = "red") # lwr
 lines(speed, pred.int[, 3], lty = 2, col = "red") # upr
 
 ## TASK 2.6 ##
-# Predict braking distance for speed 30, 31, …, 50. Illustrate the results on scatter diagram.
+# Predict braking distance for speed 30, 31, â€¦, 50. Illustrate the results on scatter diagram.
 new_data <- data.frame(
                         speed = c(30:50)
                       )
@@ -149,7 +149,7 @@ abline(model, col = "red", lwd = 2)
 
 ### TASK 2 ### WITHOUT OUTLIER
 # identify outlier
-# outlier - any point that doesn’t appear to belong with the vast majority of the other points.
+# outlier - any point that doesnâ€™t appear to belong with the vast majority of the other points.
 outlier <- boxplot(braking)$out
 outlier_indices <- which(braking$distance %in% outlier)
 braking_1 <- braking[-c(outlier_indices), ]
@@ -192,7 +192,7 @@ lines(speed, pred.int[, 2], lty = 2, col = "green") # lwr
 lines(speed, pred.int[, 3], lty = 2, col = "green") # upr
 
 ## TASK 2.6 ##
-# Predict braking distance for speed 30, 31, …, 50. Illustrate the results on scatter diagram.
+# Predict braking distance for speed 30, 31, â€¦, 50. Illustrate the results on scatter diagram.
 new_data <- data.frame(
                         speed = c(30:50)
                       )
